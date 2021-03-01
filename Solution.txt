@@ -1,0 +1,25 @@
+Solution:
+
+On the basis of given cells calculate the number of rows and columns required.
+
+Since grid is infinite we need to take care of only that part of grid where cells come to life in next time step.
+
+To take care of negative starting co-ordinates we shift the initial live cells by some amount depending on the part of grid needed.
+
+After populating the grid with shifted live cells. (prepare_grid in solution.cpp)
+
+Updating live cells:
+
+For each cell in grid check all it's 8 neighbors present in the grid.
+Count the number of live cells:
+    maintain the next state of cell under consideration in variable state
+    if cell is a dead cell and number of live cells in its neihbor is 3 then 
+        state = 1
+     
+    If cell is living cell and its neighbor consists of live cells more than 3 or less than 2 then      state = 0
+
+    update grid[i][j] as grid[i][j] += state << 1
+    meaning: first bit of grid[i][j] contains current state and second bit consists of next state
+
+After one iteration of entire grid under consideration we update the values of grid cells in next iteration as grid[i][j] >>= 1.
+This will 2nd bit as the final answer which is current state of the cell.
