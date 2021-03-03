@@ -1,5 +1,42 @@
-#include "solution.h"
+#include <bits/stdc++.h>
 using namespace std;
+
+class BoardGame{
+protected:
+    vector <vector <int> > grid;
+    int width , height;
+    int row_start , col_start;
+
+public:
+    virtual void step(){};
+    virtual void show_board(){};
+    virtual void get_result(){};
+
+    void set_width(int width){
+        this->width = width;
+    }
+    void set_height(int height)
+    {
+        this->height = height;
+    }
+    int get_width()
+    {
+        return this->width;
+    }
+    int get_height()
+    {
+        return this->height;
+    }
+};
+
+class solution : public BoardGame{
+public:
+    solution(vector <pair <int , int> > cells);
+    void step();
+    void show_board();
+    void prepare_grid(vector <pair <int , int> > cells);
+    void get_result();
+};
 
 solution::solution(vector <pair <int , int> > cells)
 {
@@ -24,14 +61,14 @@ solution::solution(vector <pair <int , int> > cells)
     set_width(m + 1);
     set_height(n + 1);
     
-    solution::prepare_grid(cells);
+    prepare_grid(cells);
 
 }
 
 void solution::prepare_grid(vector <pair <int , int> > cells)
 {
-    int rows = solution::get_height();
-    int cols = solution::get_width();
+    int rows = get_height();
+    int cols = get_width();
     cout<<"grid size "<<rows<<" "<<cols<<endl;
     for(int i = 0; i < rows ; i++)
     {
@@ -117,4 +154,66 @@ void solution::get_result()
     for(auto itr = res.begin() ; itr != res.end() ; itr++)
         cout<<itr->first<<", "<< itr->second<<endl;
     return;
+}
+
+class GameEngine
+{
+private:
+    BoardGame * board_game = NULL;
+public:
+    void StartGame()
+    {
+        vector <pair <int , int> > cells;
+        int n;
+        cout<<"Enter the number of living cells"<<endl;
+        cin>>n;
+        cout<<"Enter co-ordinates for each cell"<<endl;
+        for(int i = 0; i < n; i++)
+        {
+            int x , y;
+            cin>>x>>y;
+            cells.push_back(make_pair(x , y));
+        }
+        board_game = new solution(cells);
+    }
+
+    void next_step()
+    {
+        if(board_game != NULL)
+            board_game->step();
+        else
+            cout<<"INITIALIZE THE BOARD BEFORE STARTING SIMULATION"<<endl;
+    }
+
+    void show_state()
+    {
+        if(board_game != NULL)
+            board_game->show_board();
+        else
+            cout<<"INITIALIZE THE BOARD BEFORE STARTING SIMULATION"<<endl;
+    }
+
+    void show_live_cells()
+    {
+        if(board_game != NULL)
+            board_game->get_result();
+        else
+            cout<<"INITIALIZE THE BOARD BEFORE STARTING SIMULATION"<<endl;
+    }
+};
+
+
+int main()
+{
+    GameEngine engine;
+    engine.StartGame();
+    
+    engine.show_live_cells();
+    engine.show_state();
+
+    engine.next_step();
+
+    engine.show_live_cells();
+    engine.show_state();    
+    return 0;
 }
