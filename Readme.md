@@ -2,7 +2,7 @@ Run the program:
 
 ./main (Already compiled binary)
 or 
-run g++ -std=c++11 solution.cpp -o main
+run g++ -std=c++11 main.o GameEngine.o solution.o BoardGame.o -o main
 then ./main
 
 Program will prompt for number of live cells.
