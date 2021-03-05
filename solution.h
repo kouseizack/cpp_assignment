@@ -2,12 +2,16 @@
 #define solution_h
 #include "BoardGame.h"
 
-class solution : public BoardGame{
+class solution{
+private:    
+	BoardGame * simulatorboard = NULL;
 public:
-    solution(vector <pair <int , int> > cells);
-    void step();
+    solution(BoardGame *board);
+    int countAlive(int x , int y);
+    int countCell(int x , int y);
+    int getNextState(int x , int y);
+    void fwd();
     void show_board();
-    void prepare_grid(vector <pair <int , int> > cells);
-    void get_result();
+    vector <pair <int , int> > get_result();
 };
 #endif

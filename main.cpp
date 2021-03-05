@@ -11,8 +11,8 @@ int main()
     engine.show_state();
 
     engine.next_step();
-
+    engine.show_state();
     engine.show_live_cells();
-    engine.show_state();    
+    
     return 0;
 }

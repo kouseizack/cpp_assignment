@@ -7,6 +7,7 @@ class GameEngine
 {
 private:
     BoardGame * board_game = NULL;
+    solution * simulator = NULL;
 public:
     void StartGame();
     void next_step();
